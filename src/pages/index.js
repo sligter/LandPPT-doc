@@ -1,43 +1,406 @@
-import clsx from 'clsx';
-import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import React, {useEffect} from 'react';
+import Head from '@docusaurus/Head';
 import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
 
-import Heading from '@theme/Heading';
-import styles from './index.module.css';
+const bodyHtml = `
+  <!-- Background Glow Effects -->
+  <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+    <div class="absolute top-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+    <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+  </div>
 
-function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
-  return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/landppt">
-            LandPPT 快速上手
-          </Link>
+  <!-- Navbar -->
+  <nav class="fixed w-full z-50 top-0 transition-all duration-300" :class="{ 'bg-dark-bg/90 backdrop-blur-md border-b border-dark-border': $store.scroll.scrolled }" x-data="{ mobileMenuOpen: false }" @scroll.window="$store.scroll.scrolled = (window.pageYOffset > 20)">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center">
+          <a href="#" class="flex items-center space-x-2">
+            <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">LandPPT</span>
+          </a>
+        </div>
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-8">
+            <a href="#features" class="hover:text-blue-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">功能亮点</a>
+            <a href="#workflow" class="hover:text-blue-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">工作流</a>
+            <a href="#showcase" class="hover:text-blue-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">演示案例</a>
+            <a href="#tech" class="hover:text-blue-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">技术栈</a>
+            <a href="https://github.com/sligter/LandPPT/blob/main/README.md" target="_blank" class="hover:text-blue-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">文档</a>
+          </div>
+        </div>
+        <div class="hidden md:block">
+          <a href="https://github.com/sligter/LandPPT" target="_blank" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            <i class="fab fa-github mr-2"></i> GitHub Star
+          </a>
+        </div>
+        <div class="-mr-2 flex md:hidden">
+          <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+            <i class="fas fa-bars text-xl" x-show="!mobileMenuOpen"></i>
+            <i class="fas fa-times text-xl" x-show="mobileMenuOpen"></i>
+          </button>
         </div>
       </div>
-    </header>
-  );
-}
+    </div>
+
+    <!-- Mobile menu -->
+    <div x-show="mobileMenuOpen" class="md:hidden bg-dark-card border-b border-dark-border" x-transition>
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a href="#features" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">功能亮点</a>
+        <a href="#workflow" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">工作流</a>
+        <a href="https://github.com/sligter/LandPPT" target="_blank" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <div data-aos="fade-up" data-aos-duration="1000">
+        <span class="inline-block py-1 px-3 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-semibold mb-6">
+          🚀 AI 驱动的演示文稿革命
+        </span>
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8">
+          文档转 PPT，<br>
+          <span class="text-gradient">仅需一键，即刻呈现</span>
+        </h1>
+        <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400 mb-10">
+          LandPPT 集成 GPT-4o、Claude 等顶尖模型，自动进行深度研究、内容提炼与排版设计。让 AI 为您处理繁琐工作，专注于演讲本身。
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href="#start" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-xl text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-blue-500/30 transition-all transform hover:-translate-y-1">
+            <i class="fas fa-rocket mr-2"></i> 立即开始
+          </a>
+          <a href="https://github.com/sligter/LandPPT" target="_blank" class="inline-flex items-center justify-center px-8 py-4 border border-gray-600 text-lg font-medium rounded-xl text-gray-300 bg-dark-card hover:bg-gray-800 hover:text-white transition-all">
+            <i class="fab fa-docker mr-2"></i> 本地部署
+          </a>
+        </div>
+      </div>
+
+      <!-- Dashboard Preview -->
+      <div class="mt-20 relative rounded-2xl border border-dark-border bg-dark-card shadow-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+        <div class="absolute top-0 w-full h-8 bg-slate-800 border-b border-dark-border flex items-center px-4 space-x-2">
+          <div class="w-3 h-3 rounded-full bg-red-500"></div>
+          <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+          <div class="w-3 h-3 rounded-full bg-green-500"></div>
+        </div>
+        <!-- Placeholder for Main Interface Image -->
+        <img src="https://img.pub/p/4b07dee6cf3cef023bd8.png" alt="LandPPT Dashboard" class="w-full h-auto mt-8 opacity-90 hover:opacity-100 transition-opacity duration-500">
+                
+        <!-- Overlay Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-t from-dark-bg via-transparent to-transparent opacity-60"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats / Trusted By (Mockup) -->
+  <section class="py-10 border-y border-dark-border bg-slate-900/50">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-sm text-gray-500 uppercase tracking-wider mb-6">支持全球顶尖 AI 模型与引擎</p>
+      <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+        <div class="flex items-center gap-2"><i class="fas fa-robot text-2xl"></i> <span class="text-xl font-bold">OpenAI</span></div>
+        <div class="flex items-center gap-2"><i class="fas fa-brain text-2xl"></i> <span class="text-xl font-bold">Anthropic</span></div>
+        <div class="flex items-center gap-2"><i class="fab fa-google text-2xl"></i> <span class="text-xl font-bold">Gemini</span></div>
+        <div class="flex items-center gap-2"><i class="fas fa-search text-2xl"></i> <span class="text-xl font-bold">Tavily</span></div>
+        <div class="flex items-center gap-2"><i class="fas fa-image text-2xl"></i> <span class="text-xl font-bold">DALL·E 3</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid (Bento Box Style) -->
+  <section id="features" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">全能型 PPT 创作引擎</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">从构思到成品，每一个环节都由 AI 深度赋能，为您节省 90% 的制作时间。</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Feature 1: Large -->
+        <div class="md:col-span-2 glass-card rounded-3xl p-8 relative overflow-hidden group" data-aos="fade-right">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16 transition-all group-hover:bg-blue-500/20"></div>
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-6 text-blue-400">
+              <i class="fas fa-magic text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-3">智能内容解析与增强</h3>
+            <p class="text-gray-400 mb-6">上传 PDF、Word 或 Markdown，AI 自动提取核心观点，构建逻辑清晰的大纲。集成 Tavily 搜索引擎，自动补充最新网络数据与事实支撑。</p>
+            <ul class="space-y-2 text-gray-300">
+              <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> 多格式文档支持 (PDF/DOCX/MD)</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> MinerU 高精度解析</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> 实时联网深度研究报告</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="glass-card rounded-3xl p-8 relative overflow-hidden group" data-aos="fade-left">
+          <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center mb-6 text-purple-400">
+            <i class="fas fa-palette text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">AI 视觉设计</h3>
+          <p class="text-gray-400 text-sm">不仅是文字，更是视觉盛宴。自动匹配 Unsplash 高清图库，或使用 AI 生成独一无二的配图。</p>
+          <div class="mt-4 flex gap-2">
+            <span class="text-xs bg-dark-bg px-2 py-1 rounded border border-dark-border">DALL-E</span>
+            <span class="text-xs bg-dark-bg px-2 py-1 rounded border border-dark-border">SiliconFlow</span>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glass-card rounded-3xl p-8 relative overflow-hidden group" data-aos="fade-up">
+          <div class="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center mb-6 text-green-400">
+            <i class="fas fa-file-powerpoint text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">多格式导出</h3>
+          <p class="text-gray-400 text-sm">支持导出为可编辑的 PPTX 文件、高保真 PDF 或 HTML 网页格式。演讲稿自动同步生成，支持导出到 PPT 备注。</p>
+        </div>
+
+        <!-- Feature 4: Large -->
+        <div class="md:col-span-2 glass-card rounded-3xl p-8 relative overflow-hidden group" data-aos="fade-up">
+          <div class="absolute bottom-0 left-0 w-64 h-64 bg-pink-500/10 rounded-full blur-3xl -ml-16 -mb-16 transition-all group-hover:bg-pink-500/20"></div>
+          <div class="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+            <div class="flex-1">
+              <div class="w-12 h-12 rounded-lg bg-pink-500/20 flex items-center justify-center mb-6 text-pink-400">
+                <i class="fas fa-comments text-2xl"></i>
+              </div>
+              <h3 class="text-2xl font-bold mb-3">AI 交互式编辑</h3>
+              <p class="text-gray-400 mb-4">不喜欢这一页？直接告诉 AI："换一张更商务的图片" 或 "把这段文字精简一下"。所见即所得的实时修改体验。</p>
+              <a href="#" class="text-pink-400 hover:text-pink-300 font-medium inline-flex items-center">
+                查看演示 <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+            <div class="flex-1 rounded-xl overflow-hidden border border-dark-border shadow-lg">
+              <img src="https://img.pub/p/02bac27fe8097c012d9e.png" alt="Editor UI" class="w-full h-auto">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Workflow Section -->
+  <section id="workflow" class="py-20 bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">简单三步，即刻生成</h2>
+      </div>
+            
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <!-- Step 1 -->
+        <div class="relative p-6" data-aos="fade-up" data-aos-delay="0">
+          <div class="w-20 h-20 mx-auto bg-blue-600/20 rounded-full flex items-center justify-center text-blue-400 text-2xl font-bold mb-6 border border-blue-500/30">1</div>
+          <h3 class="text-xl font-bold mb-3">需求输入</h3>
+          <p class="text-gray-400">输入主题或上传文档，选择受众群体与演讲时长。</p>
+        </div>
+                
+        <!-- Step 2 -->
+        <div class="relative p-6" data-aos="fade-up" data-aos-delay="200">
+          <!-- Connector Line (Desktop) -->
+          <div class="hidden md:block absolute top-10 left-[-50%] w-full h-0.5 bg-gradient-to-r from-transparent via-blue-900 to-transparent -z-10"></div>
+                    
+          <div class="w-20 h-20 mx-auto bg-purple-600/20 rounded-full flex items-center justify-center text-purple-400 text-2xl font-bold mb-6 border border-purple-500/30">2</div>
+          <h3 class="text-xl font-bold mb-3">大纲构建</h3>
+          <p class="text-gray-400">AI 自动生成结构化大纲，您可进行可视化调整与确认。</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="relative p-6" data-aos="fade-up" data-aos-delay="400">
+          <!-- Connector Line (Desktop) -->
+          <div class="hidden md:block absolute top-10 left-[-50%] w-full h-0.5 bg-gradient-to-r from-transparent via-blue-900 to-transparent -z-10"></div>
+                    
+          <div class="w-20 h-20 mx-auto bg-green-600/20 rounded-full flex items-center justify-center text-green-400 text-2xl font-bold mb-6 border border-green-500/30">3</div>
+          <h3 class="text-xl font-bold mb-3">成品生成</h3>
+          <p class="text-gray-400">AI 填充内容、设计排版、匹配图像，生成完整的 PPT。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visual Showcase -->
+  <section id="showcase" class="py-24 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">精美的生成效果</h2>
+          <p class="text-gray-400">专业的排版与视觉设计，告别平庸的 PPT。</p>
+        </div>
+        <div class="mt-4 md:mt-0">
+          <a href="https://github.com/sligter/LandPPT" class="text-blue-400 hover:text-blue-300 font-medium">查看更多示例 <i class="fas fa-external-link-alt ml-1"></i></a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="rounded-xl overflow-hidden border border-dark-border shadow-2xl hover:scale-[1.02] transition-transform duration-500" data-aos="fade-right">
+          <img src="https://img.pub/p/1f9e79326ddeae3b8716.png" alt="Showcase 1" class="w-full h-auto">
+        </div>
+        <div class="rounded-xl overflow-hidden border border-dark-border shadow-2xl hover:scale-[1.02] transition-transform duration-500" data-aos="fade-left">
+          <img src="https://img.pub/p/9a38b57c6f5f470ad59b.png" alt="Showcase 2" class="w-full h-auto">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack & Deploy -->
+  <section id="tech" class="py-20 bg-gradient-to-b from-dark-bg to-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass-card rounded-3xl p-8 md:p-12 border border-blue-500/20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 class="text-3xl font-bold mb-6">开发者友好的架构</h2>
+            <p class="text-gray-400 mb-6">基于 Python 3.11+ 和 FastAPI 构建，支持 Docker 一键部署。开源透明，数据安全可控。</p>
+                        
+            <div class="flex flex-wrap gap-3 mb-8">
+              <span class="px-3 py-1 bg-blue-900/30 text-blue-300 rounded-full text-sm border border-blue-500/20">FastAPI</span>
+              <span class="px-3 py-1 bg-blue-900/30 text-blue-300 rounded-full text-sm border border-blue-500/20">LangChain</span>
+              <span class="px-3 py-1 bg-blue-900/30 text-blue-300 rounded-full text-sm border border-blue-500/20">Docker</span>
+              <span class="px-3 py-1 bg-blue-900/30 text-blue-300 rounded-full text-sm border border-blue-500/20">React / Vue</span>
+            </div>
+
+            <div class="bg-black/50 rounded-lg p-4 font-mono text-sm text-green-400 overflow-x-auto border border-gray-700">
+              <div class="flex mb-2">
+                <span class="text-gray-500 mr-2">#</span>
+                <span>快速启动 (Docker)</span>
+              </div>
+              <p>docker pull bradleylzh/landppt:latest</p>
+              <p class="mt-2">docker run -d -p 8000:8000 \\</p>
+              <p class="pl-4">--env-file .env \\</p>
+              <p class="pl-4">bradleylzh/landppt:latest</p>
+            </div>
+          </div>
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 mt-1">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-lg font-medium text-white">私有化部署</h3>
+                <p class="mt-1 text-gray-400">支持企业内部部署，结合 Ollama 本地模型，确保文档数据不出内网。</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 mt-1">
+                <i class="fas fa-plug"></i>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-lg font-medium text-white">API 驱动</h3>
+                <p class="mt-1 text-gray-400">提供完整的 RESTful API 文档 (Swagger/ReDoc)，易于集成到现有工作流中。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-10"></div>
+    <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+      <h2 class="text-4xl font-bold mb-6">准备好提升演示效率了吗？</h2>
+      <p class="text-xl text-gray-300 mb-10">加入 GitHub 社区，获取最新更新，或立即部署属于您的 LandPPT。</p>
+      <div class="flex justify-center gap-6">
+        <a href="https://github.com/sligter/LandPPT" class="px-8 py-4 bg-white text-blue-900 font-bold rounded-xl hover:bg-gray-100 transition-colors shadow-lg">
+          访问 GitHub 仓库
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark-bg border-t border-dark-border pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div class="col-span-1 md:col-span-2">
+          <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-4 inline-block">LandPPT</span>
+          <p class="text-gray-400 mb-6 max-w-sm">
+            AI 驱动的演示文稿生成平台，致力于通过人工智能技术革新演示文稿的创作体验。
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-github text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-telegram text-xl"></i></a>
+            <a href="mailto:ai@yydsapp.com" class="text-gray-400 hover:text-white transition-colors"><i class="fas fa-envelope text-xl"></i></a>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">资源</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-blue-400 text-sm">快速开始</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-blue-400 text-sm">API 文档</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-blue-400 text-sm">常见问题</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">联系</h3>
+          <ul class="space-y-2">
+            <li class="text-gray-400 text-sm"><i class="fas fa-envelope mr-2"></i> ai@yydsapp.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-dark-border pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-500 text-sm">© 2025 LandPPT Team. Apache 2.0 License.</p>
+        <p class="text-gray-500 text-sm mt-2 md:mt-0">Designed for Efficiency.</p>
+      </div>
+    </div>
+  </footer>
+`;
 
 export default function Home() {
-  const {siteConfig} = useDocusaurusContext();
+  useEffect(() => {
+  // Initialize AOS when loaded
+  const tryInitAOS = () => {
+    if (window.AOS && typeof window.AOS.init === 'function') {
+    window.AOS.init({ once: true, offset: 50, duration: 800 });
+    }
+  };
+
+  // Setup Alpine store for scroll if Alpine is present
+  const initAlpineStore = () => {
+    try {
+    if (window.Alpine && typeof window.Alpine.store === 'function') {
+      window.Alpine.store('scroll', { scrolled: false });
+    }
+    } catch (e) {
+    // ignore
+    }
+  };
+
+  if (window.Alpine) initAlpineStore();
+  if (window.AOS) tryInitAOS();
+
+  // If libraries load later, observe DOM for script additions
+  const observer = new MutationObserver(() => {
+    if (window.Alpine) initAlpineStore();
+    if (window.AOS) tryInitAOS();
+  });
+  observer.observe(document.documentElement || document.body, { childList: true, subtree: true });
+
+  return () => observer.disconnect();
+  }, []);
+
   return (
-    <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
-      <HomepageHeader />
-      <main>
-        <HomepageFeatures />
-      </main>
+  <>
+    <Head>
+    <meta charSet="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LandPPT - AI驱动的智能演示文稿生成平台</title>
+    <meta name="description" content="基于大语言模型（LLM）的智能PPT生成平台，一键将文档转换为专业演示文稿。支持GPT-4o, Claude, Gemini等多种模型。" />
+
+    {/* Tailwind config must appear before tailwind script */}
+    <script dangerouslySetInnerHTML={{ __html: `tailwind.config = { darkMode: 'class', theme: { extend: { colors: { brand: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e', }, dark: { bg: '#0f172a', card: '#1e293b', border: '#334155' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], }, animation: { 'blob': 'blob 7s infinite', }, keyframes: { blob: { '0%': { transform: 'translate(0px, 0px) scale(1)' }, '33%': { transform: 'translate(30px, -50px) scale(1.1)' }, '66%': { transform: 'translate(-20px, 20px) scale(0.9)' }, '100%': { transform: 'translate(0px, 0px) scale(1)' }, } } } }` }} />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script dangerouslySetInnerHTML={{ __html: `document.addEventListener('alpine:init', () => { Alpine.store('scroll', { scrolled: false }) })` }} />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>{`body { background-color: #0f172a; color: #f8fafc; font-family: 'Inter', sans-serif; overflow-x: hidden; } .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); } .text-gradient { background: linear-gradient(to right, #38bdf8, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; } ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #0f172a; } ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; } ::-webkit-scrollbar-thumb:hover { background: #475569; }`}</style>
+    </Head>
+
+    <Layout>
+    <main>
+      <div dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+    </main>
     </Layout>
+  </>
   );
 }
