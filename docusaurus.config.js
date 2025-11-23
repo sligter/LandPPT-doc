@@ -139,10 +139,6 @@ const config = {
             title: '更多',
             items: [
               {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
                 label: 'GitHub',
                 href: 'https://github.com/sligter/LandPPT',
               },
