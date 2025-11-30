@@ -6,7 +6,7 @@ slug: /
 
 LandPPT 是一个 AI 驱动的 PPT 制作平台，本说明站覆盖了从需求建模、模板管理到运行配置的全部能力。你可以按“入门 → AI 流程 → 资源管理 → 系统配置”的顺序阅读，也可以直接跳转到需要的章节。
 
-![image](https://img.pub/p/4b07dee6cf3cef023bd8.png)
+![image](https://img.pub/p/7d5c3c1a4b625abeb4c1.png)
 
 ## 文档结构
 

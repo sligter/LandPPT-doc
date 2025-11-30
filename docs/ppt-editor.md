@@ -8,7 +8,7 @@ LandPPT 的在线编辑器结合幻灯片管理、实时预览、CodeMirror 编�
 
 ## 界面布局
 
-![image](https://img.pub/p/2dfb2bf23c9f2a5af815.png)
+![image](https://img.pub/p/6d357a847626f1a55c13.png)
 
 | 区域 | 描述 |
 | ---- | ---- |
