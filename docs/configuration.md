@@ -6,13 +6,13 @@ slug: /configuration
 
 > 所有运行时开关都集中在「系统配置中心」（默认地址 `http://<host>:8000/ai-config`）。
 
-![image](https://img.pub/p/2c4509b730048d56ada9.png)
+![image](https://img.pub/p/8d5a82e862e75d251455.png)
 
-![image](https://img.pub/p/d748a1ff03d10ee6df5d.png)
+![image](https://img.pub/p/0316375430a707d7da61.png)
 
-![image](https://img.pub/p/c6e6d49a45ef625df514.png)
+![image](https://img.pub/p/5b49d40f40f7db73578a.png)
 
-![image](https://img.pub/p/96098e7b04b7a643897e.png)
+![image](https://img.pub/p/a0109f067629825d1f47.png)
 
 ## 页面结构
 
